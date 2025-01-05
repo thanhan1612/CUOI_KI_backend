@@ -1,9 +1,14 @@
 import TeachersModel from "../models/Teachers.js";
 import TeacherpositionModel from "../models/Teachersposition.js";
+import mongoose from "mongoose";
 const AdminControllers = {
     getTeachers: async (req,res) => {
+        const totalItems = await TeachersModel.countDocuments();
+        const totalPages = Math.ceil(totalItems/5);
+        const skip = 20;
+        const teachersusers = await TeachersModel.find().skip(skip).limit(5);
         try {
-        const teachersusers= await TeachersModel.find().populate({path: 'userId',select:"name address"}).populate({ path: 'teacherPositionsId', select: 'name' });
+        const teachersusers= await TeachersModel.find().populate({path: 'userId',select:"name address+"}).populate({ path: 'teacherPositionsId', select: 'name' });
         res.status(200).send({
             
         teachersusers

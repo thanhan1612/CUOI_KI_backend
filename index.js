@@ -9,7 +9,10 @@ await mongoose.connect(process.env.MONGO_URL).then(() =>{
     console.log('connected database');
 });
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    credentials: true // Allow cookies to be sent and received
+}));
 
 app.use(express.json());
 
